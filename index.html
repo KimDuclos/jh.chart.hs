@@ -11,6 +11,7 @@
 </head>
 
 <body>
+	<h2>Job Hunt Progress Chart</h2>
 	<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 	<script>
 		let total;
@@ -53,7 +54,11 @@
 							data: yValues
 						}]
 					},
-					options: { total, int, off, rej }
+					options: {
+						legend: {
+							display: false
+						}
+					}
 				});
 			}).catch(err => {
 				console.log(err);
