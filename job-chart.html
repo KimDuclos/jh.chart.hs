@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+	</script>
+	<title>Job Chart</title>
+</head>
+
+<body>
+	<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+	<script>
+		let total;
+		let int;
+		let off;
+		let rej;
+		let xValues = ["Applications", "Interviews", "Offers", "Rejections"];
+		let yValues;
+		let barColors = ["red", "green", "blue", "orange"];
+
+		(getData = () => {
+			int = 0;
+			off = 0;
+			rej = 0;
+			let apiUrl = 'https://sheetdb.io/api/v1/ync6zagk6tlag';
+			fetch(apiUrl).then(response => {
+				return response.json();
+			}).then(data => {
+				var total = parseInt(data.length);
+
+				for (let i = 0; i < data.length; i++) {
+					if (data[i].Interview !== '') {
+						int++;
+					}
+					if (data[i].Rejection !== '') {
+						rej++;
+					}
+					if (data[i].Offer !== '') {
+						of++;
+					}
+				}
+				yValues = [total, int, off, rej];
+
+				new Chart("myChart", {
+					type: "bar",
+					data: {
+						labels: xValues,
+						datasets: [{
+							backgroundColor: barColors,
+							data: yValues
+						}]
+					},
+					options: { total, int, off, rej }
+				});
+			}).catch(err => {
+				console.log(err);
+			});
+		})();
+	</script>
+</body>
+
+</html>
