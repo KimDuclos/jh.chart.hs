@@ -18,14 +18,15 @@
 		let int;
 		let off;
 		let rej;
-		let xValues = ["Applications", "Interviews", "Offers", "Rejections"];
+		let xValues = ["Applications", "Interviews", "Offers", "Rejections", "Other"];
 		let yValues;
-		let barColors = ["green", "blue", "purple", "orange"];
+		let barColors = ["green", "blue", "purple", "orange", "gray"];
 
 		(getData = () => {
 			int = 0;
 			off = 0;
 			rej = 0;
+			oth = 0;
 			let apiUrl = 'https://sheetdb.io/api/v1/ync6zagk6tlag';
 			fetch(apiUrl).then(response => {
 				return response.json();
@@ -40,10 +41,13 @@
 						rej++;
 					}
 					if (data[i].Offer !== '') {
-						of++;
+						off++;
+					}
+					if (data[i].Other != '') {
+						oth++;
 					}
 				}
-				yValues = [total, int, off, rej];
+				yValues = [total, int, off, rej, oth];
 
 				new Chart("myChart", {
 					type: "bar",
